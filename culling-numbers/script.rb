@@ -1,4 +1,22 @@
-#pseudo code
+# [2015-03-30] Challenge #208 [Easy] Culling Numbers
+# submitted 1 month ago by Coder_d00d1 3
+# Description:
+
+# Numbers surround us. Almost too much sometimes. It would be good to just cut these numbers down and cull out the repeats.
+# Given some numbers let us do some number "culling".
+# Input:
+
+# You will be given many unsigned integers.
+# Output:
+
+# Find the repeats and remove them. Then display the numbers again.
+# Example:
+
+# Say you were given:
+# 1 1 2 2 3 3 4 4
+# Your output would simply be:
+# 1 2 3 4
+
 
 	def input(number_string)
 		number_string = number_string.split(" ").to_a.uniq!.sort!.map{|num| num.to_i}
