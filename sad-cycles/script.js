@@ -90,43 +90,32 @@ function sumPower(base, power){
 	return finalNumber;
 }
 
-function loop(arr) {
-
-	var dup = null;
-	var indexOne = null;
-	var indexTwo = null;
-
-	for (var x = 0; x < arr.length; x++) {
-		
-		indexOne = x;
-
-		for (var y = (x + 1); y < arr.length; y++) {
-			
-			indexTwo = y;
-			dup = arr[y];
-			
-			// console.log(arr[y]);
-			if (dup === arr[x]) {
-
-				console.log("index " + indexOne + " | " + arr[indexOne] + " index " + indexTwo + " | " + arr[indexTwo]); //Shows which indexes in the array contain the b-sad-cycle
-				return arr.slice(indexOne, indexTwo);
-				break;
-			}
-		}
-	}
-}
-
 function sad(b, n) {
 
 	var eachSum = sumPower(b, n);
 	var array = [];
+	var indexOne = null;
+	var indexTwo = null;
+	var dup = null; 
 
-	for (var i = 0; i < 100; i++) {
+	for (var i = 0; i < 3000; i++) {
+
 		eachSum = sumPower(eachSum, n);
 		array.push(eachSum);
-	}
 
-	return loop(array);
+		for (var x = 0; x < (array.length - 1); x++){
+
+			indexOne = x;
+
+			if (array[x] === eachSum) {
+
+				console.log("index " + indexOne + " | " + array[indexOne] + " index " + array.length + " | " + array[(array.length-1)]); //Shows which indexes in the array contain the b-sad-cycle
+				console.log(array);
+				return array.slice(indexOne, (array.length - 1));
+				break;
+			}
+		}
+	}
 }
 
 
