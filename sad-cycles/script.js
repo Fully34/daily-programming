@@ -90,28 +90,12 @@ function sumPower(base, power){
 	return finalNumber;
 }
 
-function sad(b, n) {
-
-	var eachSum = sumPower(b, n);
-	var array = [];
-
-	for (var i = 0; i < 500; i++) {
-		eachSum = sumPower(eachSum, n);
-		// console.log(eachSum);
-		array.push(eachSum);
-	}
-
-	// if (eachSum)
-
-	return array;
-
-}
-
 function loop(arr) {
 
 	var dup = null;
 	var indexOne = null;
 	var indexTwo = null;
+
 	for (var x = 0; x < arr.length; x++) {
 		
 		indexOne = x;
@@ -124,12 +108,30 @@ function loop(arr) {
 			// console.log(arr[y]);
 			if (dup === arr[x]) {
 
-				console.log("index " + indexOne + " | " + arr[indexOne] + " index " + indexTwo + " | " + arr[indexTwo])
+				console.log("index " + indexOne + " | " + arr[indexOne] + " index " + indexTwo + " | " + arr[indexTwo]); //Shows which indexes in the array contain the b-sad-cycle
+				return arr.slice(indexOne, indexTwo);
 				break;
 			}
 		}
 	}
-		return "index " + indexOne + " | " + arr[indexOne] + " index " + indexTwo + " | " + arr[indexTwo]; 
 }
 
-sad(34, 6);
+function sad(b, n) {
+
+	var eachSum = sumPower(b, n);
+	var array = [];
+
+	for (var i = 0; i < 100; i++) {
+		eachSum = sumPower(eachSum, n);
+		array.push(eachSum);
+	}
+
+	return loop(array);
+}
+
+
+console.log(sad(117649, 5));
+console.log(sad(2, 6));
+console.log(sad(7,7));
+console.log(sad(14, 3));
+console.log(sad(2, 11));
