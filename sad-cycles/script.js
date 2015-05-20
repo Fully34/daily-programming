@@ -122,11 +122,11 @@ Output
         
         var array = null;
 
-        for (var i = 0; i < 400; i++) {
+        for (var i = 50000; i < 50050; i++) {
             for(var x = 0; x < 22; x++) {
                 array = sad(i, x);
                 if(array.length > 200) {
-                    console.log("base = " + i + " power = " + x + " | " + "Cycle Length: " + array.length);
+                    console.log("base = " + i + " power = " + x + " | " + "Cycle Length: " + array.length + " | First Number In Cycle | " + array[0]);
                     // console.log(array);
                 }
             }
