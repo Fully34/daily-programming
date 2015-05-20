@@ -68,59 +68,67 @@ Output
 371
 
 */
-function numArr(num) {
+    function numArr(num) {
 
-	var array = [];
-	var sNum = num.toString();
+        var array = [];
+        var sNum = num.toString();
 
-	for (var i = 0; i < sNum.length; i++) {
-		array.push(+sNum.charAt(i));
-	}
-	return array;
-}
+        for (var i = 0; i < sNum.length; i++) {
+    	   array.push(+sNum.charAt(i));
+        }
+        return array;
+    }
 
-function sumPower(base, power){
-	
-	array = numArr(base);
-	var finalNumber = 0
+    function sumPower(base, power){
+    	
+        array = numArr(base);
+        var finalNumber = 0
 
-	for (var x = 0; x < array.length; x++) {
-		finalNumber = finalNumber + Math.pow(array[x], power);
-	}
-	return finalNumber;
-}
+        for (var x = 0; x < array.length; x++) {
+    	   finalNumber = finalNumber + Math.pow(array[x], power);
+        }
+        return finalNumber;
+        }
 
-function sad(b, n) {
+    function sad(b, n) {
 
-	var eachSum = sumPower(b, n);
-	var array = [];
-	var indexOne = null;
-	var indexTwo = null;
-	var dup = null; 
+        var eachSum = sumPower(b, n);
+        var array = [];
+        var indexOne = null;
 
-	for (var i = 0; i < 3000; i++) {
+        for (var i = 0; i < 3000; i++) {
 
-		eachSum = sumPower(eachSum, n);
-		array.push(eachSum);
+            eachSum = sumPower(eachSum, n);
+            array.push(eachSum);
 
-		for (var x = 0; x < (array.length - 1); x++){
+            for (var x = 0; x < (array.length - 1); x++){
 
-			indexOne = x;
+                indexOne = x;
 
-			if (array[x] === eachSum) {
+                    if (array[x] === eachSum) {
 
-				console.log("index " + indexOne + " | " + array[indexOne] + " index " + array.length + " | " + array[(array.length-1)]); //Shows which indexes in the array contain the b-sad-cycle
-				console.log(array);
-				return array.slice(indexOne, (array.length - 1));
-				break;
-			}
-		}
-	}
-}
+    				// console.log("index " + indexOne + " | " + array[indexOne] + " index " + array.length + " | " + array[(array.length-1)]); //Shows which indexes in the array contain the b-sad-cycle
+    				// console.log(array);
+                    return array.slice(indexOne, (array.length - 1));
+                    break;
+                }
+            }
+        }
+    }
 
+// Trying to find numbers and powers that will output the largest sad cycle
 
-console.log(sad(117649, 5));
-console.log(sad(2, 6));
-console.log(sad(7,7));
-console.log(sad(14, 3));
-console.log(sad(2, 11));
+    function iterate(){
+        
+        var array = null;
+
+        for (var i = 0; i < 400; i++) {
+            for(var x = 0; x < 22; x++) {
+                array = sad(i, x);
+                if(array.length > 200) {
+                    console.log("base = " + i + " power = " + x + " | " + "Cycle Length: " + array.length);
+                    // console.log(array);
+                }
+            }
+        }
+    }
