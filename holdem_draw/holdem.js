@@ -25,7 +25,7 @@ function deckConstructor() {
         var suit = suits[i];
 
         for (var x = 0; x < values.length; x ++) {
-            deck.push(values[x] + " of " + suit); 
+            deck.push(" " + values[x] + " of " + suit); 
         }
     }
     return deck;
@@ -164,6 +164,18 @@ function fullDeal() {
     turnRiver(); // --> TURN
     burn();
     turnRiver(); // --> RIVER
+
+    for (var i = 0; i < players.length; i ++) {
+        if (i === 0) {
+            console.log("Your hand: " + players[i]);
+        } else {
+            console.log("CPU " + i + " hand: " + players[i]);
+        }
+    }
+
+    console.log("Flop: " + community[0]);
+    console.log("Turn: " + community[1]);
+    console.log("River: " + community[2]);
 }
 //===========================================================================//
 //===============================  BIG RESET  ===============================//
