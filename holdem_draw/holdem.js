@@ -14,7 +14,6 @@
 //===============================DECK CONTROLS===============================//
 
 var deck = [];
-var community = [];
 
 function deckConstructor() {
 
@@ -68,30 +67,105 @@ function shuffle(arr) {
 
 //initiate players with empty array as their value
 
-var players = {
-
-    human: []
-
-}; 
+var players = [];
 
 function playerAdd(num) {
 
-    for (var i = 1; i <= num; i ++) {
-        players["CPU " + i] = [];
-    }
+    for (var i = 0; i <= num; i ++) {
+    
+            players[i] = [];
+
+        }
     return players;
 };
 
-function playerClear(obj) {
-    obj = {
-        human: []
-    } 
-    return obj;
+function clearPlayer() {
+    players = [];
 }
+
 
 //===========================================================================//
 //===============================DRAW CONTROLS===============================//
 
 // Need to take cards out of 'deck' in the proper order and put them into the object.
-// also need to 
+// also need to push cards to community and burned piles.
 
+var community = [];
+var burned = [];
+
+
+function deal() {
+
+    var card = null;
+    var playerLength = null;
+    // players
+    for (var j = 0; j < 2; j ++){
+
+        for (var i = 0; i < players.length; i ++) {
+
+            playerLength = players[i];
+
+            for (var x = 0; x < 1; x ++){
+
+                var card = deck.pop();
+                players[i].push(card);
+
+            }
+        }
+    }
+
+    for (var k = 0; k < 3; k ++){
+
+        if (k === 0) { // --> FLOP
+
+            for (var s = 1; s < 1; s ++) {
+                card = deck.pop();
+                burned.push(card);
+
+                for (var n = 0; n < 3; n ++) {
+                    card = deck.pop();
+                    community.push(card);
+                    console.log("Supposed to be FLOP")
+                }
+
+            }
+
+        } else { // --> TURN AND RIVER
+
+            for (var y = 0; y < 1; y ++) {
+
+                card = deck.pop();
+                burned.push(card);
+
+                for (var z = 0; z < 1; z ++){
+                    card = deck.pop();
+                    community.push(card);
+
+                }
+
+            }
+        }
+
+    }
+
+    return players;
+
+}
+
+
+
+//===========================================================================//
+//===============================  BIG RESET  ===============================//
+
+function reset() {
+    
+    clearPlayer();
+    clearDeck();
+
+    deckConstructor();
+    shuffle(deck);
+
+    playerAdd(5);
+
+    return deck;
+}
