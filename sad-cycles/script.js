@@ -107,7 +107,7 @@ Output
 
                     if (array[x] === eachSum) {
 
-    				// console.log("index " + indexOne + " | " + array[indexOne] + " index " + array.length + " | " + array[(array.length-1)]); //Shows which indexes in the array contain the b-sad-cycle
+    				// console.log("index " + indexOne + " | " + array[indexOne] + " index " + array.length + " | " + array[(array.length - 1)]); //Shows which indexes in the array contain the b-sad-cycle
     				// console.log(array);
                     return array.slice(indexOne, (array.length - 1));
                     break;
@@ -116,16 +116,16 @@ Output
         }
     }
 
-// Trying to find numbers and powers that will output the largest sad cycle
+    // Trying to find numbers and powers that will output the largest sad cycle
 
     function iterate(){
         
         var array = null;
 
-        for (var i = 50000; i < 50050; i++) {
-            for(var x = 0; x < 22; x++) {
+        for (var i = 2; i < 100; i++) {
+            for(var x = 1; x < 17; x++) {
                 array = sad(i, x);
-                if(array.length > 200) {
+                if(x === 15) { //--> change the condition to specify what you want to see.  There is some pretty crazy shit here!
                     console.log("base = " + i + " power = " + x + " | " + "Cycle Length: " + array.length + " | First Number In Cycle | " + array[0]);
                     // console.log(array);
                 }
