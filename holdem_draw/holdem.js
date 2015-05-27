@@ -94,7 +94,7 @@ var community = [];
 var burned = [];
 
 
-function deal() {
+function playerDeal() {
 
     var card = null;
     var playerLength = null;
@@ -113,59 +113,74 @@ function deal() {
             }
         }
     }
-
-    for (var k = 0; k < 3; k ++){
-
-        if (k === 0) { // --> FLOP
-
-            for (var s = 1; s < 1; s ++) {
-                card = deck.pop();
-                burned.push(card);
-
-                for (var n = 0; n < 3; n ++) {
-                    card = deck.pop();
-                    community.push(card);
-                    console.log("Supposed to be FLOP")
-                }
-
-            }
-
-        } else { // --> TURN AND RIVER
-
-            for (var y = 0; y < 1; y ++) {
-
-                card = deck.pop();
-                burned.push(card);
-
-                for (var z = 0; z < 1; z ++){
-                    card = deck.pop();
-                    community.push(card);
-
-                }
-
-            }
-        }
-
-    }
-
-    return players;
-
+    return deck;
 }
 
 
+function takeTop(arr) {
 
+    var card = arr.pop();
+
+    return card;
+}
+
+function burn() {
+
+    var card = takeTop(deck);
+    burned.push(card);
+
+    return deck;
+
+}
+
+function flop() {
+
+    var flop = [];
+
+    for (var i = 0; i < 3; i ++) {
+        var card = takeTop(deck);
+        flop.push(card);
+    }
+
+    community.push(flop);
+
+    return deck;
+}
+
+function turnRiver() {
+
+    var card = takeTop(deck);
+    community.push(card);
+
+    return deck;
+}
+
+function fullDeal() {
+
+    playerDeal();
+    burn();
+    flop();
+    burn();
+    turnRiver(); // --> TURN
+    burn();
+    turnRiver(); // --> RIVER
+}
 //===========================================================================//
 //===============================  BIG RESET  ===============================//
 
 function reset() {
     
+    var input = prompt("How many computers would you like to add?  (between 1 and 6!)")
+
     clearPlayer();
     clearDeck();
+    burned = [];
+    community = [];
 
     deckConstructor();
     shuffle(deck);
 
-    playerAdd(5);
+    playerAdd(input);
 
     return deck;
 }
