@@ -38,10 +38,10 @@
 //  4
 // 200
 
-// 15 12 13 11 
-// 19 14  8 18 
+// "15 12 13 11 
+// 19 14 8 18 
 // 13 14 17 15 
-//  7 14 20  7 
+// 7 14 20 7"
 
 
 // Input 2:
@@ -132,4 +132,33 @@ function createPile(dimensions, list) {
         }
     }
     return pile;
+}
+
+function addLogs(dimensions, xtraWood, list) {
+
+    debugger;
+
+    var woodPile = createPile(dimensions, list);
+    var xtra = xtraWood;
+    var temp = null;
+    var count = 1;
+
+    while (xtra > 0) {
+
+        for (var i = 0; i < dimensions; i ++) {
+
+            for (var j = 0; j < dimensions; j ++) {
+
+                if (woodPile[i][j] === count) {
+
+                    woodPile[i][j] = woodPile[i][j] + 1;
+                    xtra --;
+                }
+            }
+        }
+
+        count ++;
+    }
+
+    return woodPile;
 }
