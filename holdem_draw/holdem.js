@@ -87,13 +87,13 @@ function playerDeal() {
     var card = null;
     var playerLength = null;
     // players
-    for (var j = 0; j < 2; j ++){
+    for (var j = 0; j < 2; j ++) {
 
         for (var i = 0; i < players.length; i ++) {
 
             playerLength = players[i];
 
-            for (var x = 0; x < 1; x ++){
+            for (var x = 0; x < 1; x ++) {
 
                 var card = deck.pop();
                 players[i].push(card);
