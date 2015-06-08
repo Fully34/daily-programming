@@ -61,13 +61,16 @@ function palindromize(num) {
             newNum = base + rev;
             base = newNum;
             count ++;
+
+            if (count > 10000) {
+
+                return "That's a hell of a big number... Does not compute"
+                break;
+            }
         }
     }
 
-    if (count > 10) {
-        
-        return num + " gets palindromic after " + count + " steps: " + newNum;
-    }
+    return num + " gets palindromic after " + count + " steps: " + newNum;
 }
 
 //===========================================================================//
