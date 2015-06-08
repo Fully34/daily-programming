@@ -38,6 +38,8 @@
 // ~~~ PALINDROMIFICATION!!!! ~~~ //
 //===========================================================================//
 
+
+
 function palindromize(num) {
 
     var newNum = null;
@@ -45,11 +47,13 @@ function palindromize(num) {
     var base = null;
     var count = 1;
 
+
     if (isPal(num)) {
 
         return "That number is already a palindrome!";
 
     } else {
+
 
         rev = reverseNum(num);
         newNum = num + rev;
@@ -60,17 +64,17 @@ function palindromize(num) {
             rev = reverseNum(base);
             newNum = base + rev;
             base = newNum;
+
             count ++;
 
-            if (count > 10000) {
+            if ((count > 10000) || (newNum > 100000000000000000)) {
 
-                return "That's a hell of a big number... Does not compute"
-                break;
+                return "That's a hell of a big number... Does not compute";
             }
         }
     }
 
-    return num + " gets palindromic after " + count + " steps: " + newNum;
+    return [num, newNum];
 }
 
 //===========================================================================//
@@ -121,13 +125,64 @@ function isPal(num) {
 }
 
 //===========================================================================//
-// ~~~ ITERATOR ~~~ //
+// ~~~ Module to check if an array contains a value ~~~ //
 //===========================================================================//
 
-function iterate(start, end) {
+Array.prototype.contains = function(elem) {
+   
+   for (var i in this) {
+       
+       if (this[i] == elem) return true;
+   }
+   return false;
+};
+//===========================================================================//
+// ~~~ FIND LIKE PALINDROMES BONUS ~~~ //
+//===========================================================================//
+
+function onlyPal(start, end) {
+
+    var basicArray = [];
+    var palArray = [];
 
     for (var i = start; i <= end; i++) {
 
-        console.log(palindromize(i));
+        basicArray.push(palindromize(i));
+    }
+
+    for (var j = 0; j < basicArray.length; j ++) {
+
+        if (basicArray[j].length === 2) {
+
+            palArray.push(basicArray[j]);
+        }
+    }
+
+    return palArray;
+}
+
+function shared(start, end) {
+
+    var palArray = onlyPal(start, end);
+    var sharedPalArray = [];
+    var alreadyIn = [];
+
+    for (var i = 0; i < palArray.length; i ++) {
+
+        debugger;
+        sharedPalArray = [];
+
+        if (alreadyIn.contains(palArray[i]) === false) {
+
+            for (var j = 0; j < palArray.length; j ++) {
+
+
+                if ((palArray[i][1]) === (palArray[j][1])) {
+
+                    sharedPalArray.push(palArray[j][0]);
+                    alreadyIn.push(palArray[i][1]);
+                }
+            }
+        }
     }
 }
