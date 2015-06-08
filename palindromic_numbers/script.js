@@ -128,14 +128,66 @@ function isPal(num) {
 // ~~~ Module to check if an array contains a value ~~~ //
 //===========================================================================//
 
-Array.prototype.contains = function(elem) {
+// Array.prototype.contains = function(elem) {
    
-   for (var i in this) {
+//    for (var i in this) {
        
-       if (this[i] == elem) return true;
-   }
-   return false;
-};
+//        if (this[i] == elem) return true;
+//    }
+//    return false;
+// };
+
+//===========================================================================//
+// ~~~ UNIQUE VALUES ~~~ //
+//===========================================================================//
+
+//Need to come up with a function to check if the array is already in the array:
+
+function check(arrSpecific, arrRange) {
+
+    var isIn = false;
+
+    for (var i = 0; i < arrRange.length; i ++) {
+
+        var array = arrRange[i][0];
+        var comparing = arrSpecific[0];
+
+        if (array === comparing){
+            
+            isIn = true;
+            return isIn;
+        }
+    }
+
+    return isIn;
+}
+
+function unique(array) {
+
+    var newArray = []
+
+    for (var i = 0; i < array.length; i ++) {
+
+        // debugger; 
+
+        if (!check(array[i], newArray)) {
+
+            newArray.push(array[i]);
+        }
+    }
+
+    return newArray;
+}
+
+function printUniques(array) {
+
+    var uniques = unique(array);
+
+    for (var i = 0; i < uniques.length; i ++) {
+
+        console.log("Palindrome: " + uniques[i][0] + " | " + "Shared numbers: " +uniques[i][1]);
+    }
+}
 //===========================================================================//
 // ~~~ FIND LIKE PALINDROMES BONUS ~~~ //
 //===========================================================================//
@@ -163,26 +215,25 @@ function onlyPal(start, end) {
 
 function shared(start, end) {
 
-    var palArray = onlyPal(start, end);
-    var sharedPalArray = [];
-    var alreadyIn = [];
+    var array = onlyPal(start, end);
 
-    for (var i = 0; i < palArray.length; i ++) {
+    var tempSharedPal = [];
+    var sharedPal = [];
 
-        debugger;
-        sharedPalArray = [];
+    for (var i = 0; i < array.length; i ++) {
 
-        if (alreadyIn.contains(palArray[i]) === false) {
+        tempSharedPal = [];
 
-            for (var j = 0; j < palArray.length; j ++) {
+        for (var j = 0; j < array.length; j ++){
 
+            if (array[i][1] === array[j][1]) {
 
-                if ((palArray[i][1]) === (palArray[j][1])) {
-
-                    sharedPalArray.push(palArray[j][0]);
-                    alreadyIn.push(palArray[i][1]);
-                }
+                tempSharedPal.push(array[j][0]);
             }
         }
+        
+        sharedPal.push([array[i][1], tempSharedPal]);
     }
-}
+
+    return printUniques(sharedPal);
+};
