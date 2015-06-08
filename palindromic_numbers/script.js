@@ -32,7 +32,47 @@
 // Bonus 2: See which numbers don't get palindromic in under 10000 steps. Numbers that never converge are called Lychrel numbers.
 "use strict";
 
+// ONLY USE FIRST FUNCTION.  THE OTHERS ARE MODULES USED WITHIN palindromize();
+
+//===========================================================================//
+// ~~~ PALINDROMIFICATION!!!! ~~~ //
+//===========================================================================//
+
+function palindromize(num) {
+
+    var newNum = null;
+    var rev = null;
+    var base = null;
+    var count = 1;
+
+    if (isPal(num)) {
+
+        return "That number is already a palindrome!";
+
+    } else {
+
+        rev = reverseNum(num);
+        newNum = num + rev;
+        base = newNum;
+        
+        while (!isPal(newNum)){
+
+            rev = reverseNum(base);
+            newNum = base + rev;
+            base = newNum;
+            count ++;
+        }
+    }
+
+    if (count > 10) {
+        
+        return num + " gets palindromic after " + count + " steps: " + newNum;
+    }
+}
+
+//===========================================================================//
 // ~~~ Modules to manipulate input numbers ~~~ //
+//===========================================================================//
 
 function numToArray(num) {
 
@@ -55,8 +95,9 @@ function reverseNum(num) {
     return revNum;
 }
 
-
-// ~~~ Check if input is a palindrome ~~~ //
+//===========================================================================//
+// ~~~ Module to check if input is a palindrome ~~~ //
+//===========================================================================//
 
 function isPal(num) {
 
@@ -76,35 +117,14 @@ function isPal(num) {
     return pal;
 }
 
+//===========================================================================//
+// ~~~ ITERATOR ~~~ //
+//===========================================================================//
 
+function iterate(start, end) {
 
-function palindromize(num) {
+    for (var i = start; i <= end; i++) {
 
-    var newNum = null;
-    var rev = null;
-    var base = null;
-    var count = 0;
-
-    if (isPal(num)) {
-
-        return "That number is already a palindrome!";
-
-    } else {
-
-        while (!isPal(newNum)){
-            if (count === 0) {
-
-                rev = reverseNum(num);
-                newNum = num + rev;
-                base = newNum;
-                
-            } else {
-
-
-            newNum = base + rev;
-            rev = reverseNum(num);
-            }
-        }
-
+        console.log(palindromize(i));
     }
 }
