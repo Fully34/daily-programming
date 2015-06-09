@@ -60,7 +60,7 @@
 
         // a. Unique value modules - check(specific, range); unique(array); --> 274
 
-        // b. Quicksort module - sortUniqueShared(start, end); --> line 356
+        // b. Quicksort module - sortUniqueShared(array, start, end); --> line 356
 
         // c. See if a number is a palindrome - isPal(num); line --> 414
 
