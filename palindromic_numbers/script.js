@@ -35,17 +35,19 @@
 
 // TABLE OF CONTENTS:
     
-    // 1. Palindromize(); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. 
+    // 1. Palindromize(num); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. 
 
     // 2. Finding shared palindromes
         
         // - This is where we start doing a lot of calculations over (potentially) large ranges.  
         
-        // The functions in this section use modules to start whittling down the elements of output arrays to only contain instances of palindromes --> Then we take that list and chop it further by only looking at unique values --> and finally we get rid of any palindrome/base sets that don't have multiple base values (since we want to look at the palindromes that have multiple possible bases)
+        // The functions in this section use modules to start whittling down the elements of output arrays to only contain instances of palindromes with onlyPal(start, end); --> Then we take that list and chop it further by only looking at unique values unique(array); --> and finally we get rid of any palindrome/base sets that don't have multiple base values (since we want to look at the palindromes that have multiple possible bases)
         
-        // We also use a quicksort algorithm module to sort the final output of uniqueShared();
+        // We also use a quicksort algorithm module to sort the final output of uniqueShared(start, end);
 
-    //3. 
+    //3. mostCommonPal(start, end); Finds the most common palindrome over a certain range.
+
+        // Takes output of uniqueShared(); and finds the palindrome with the most common base numbers
 
 
 //===========================================================================//
@@ -123,17 +125,27 @@ function uniqueShared(start, end) {
 
     for (var i = 0; i < array.length; i ++) {
 
-        tempSharedPal = [];
+        tempSharedPal = []; //reset tempSharedPal for each outer loop reset
 
         for (var j = 0; j < array.length; j ++){
 
             if (array[i][1] === array[j][1]) {
 
-                tempSharedPal.push(array[j][0]);
+                tempSharedPal.push(array[j][0]); 
+
+                // This is a bit of terrible programming.  The array we are looking at was created using onlyPal(); which uses palindromize(); which returns values in the reverse order ([ baseNumber, palindrome]).  
+
+                // That is why we are concerned with array[i/j][1]
+
+                // If the palindrome is the same during the inner loop, we add the 0th element from the result of onlyPal();
+
+                    // This is the base number that creates the same palindrome
+
+                    // I understand if you are confused... I'm just dumb and I don't want to fix this right now.  
             }
         }
         
-        sharedPal.push([array[i][1], tempSharedPal]);
+        sharedPal.push([array[i][1], tempSharedPal]); // Adding the palindrome and all of the base numbers that share that palindrome --> returns duplicate values for array[i][1]
     }
 
     return sortUniqueShared( unique(sharedPal), 0, unique(sharedPal).length-1 );
