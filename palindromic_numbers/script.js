@@ -14,19 +14,17 @@
 // Note that, as an example, 196 never gets palindromic (at least according to researchers, at least never in reasonable time). Several numbers never appear to approach being palindromic.
 
 // Input Description
-
 // You will be given a number, one per line. Example:
 // 11
 // 68
-// Output Description
 
+// Output Description
 // You will describe how many steps it took to get it to be palindromic, and what the resulting palindrome is. Example:
 
 // 11 gets palindromic after 0 steps: 11
 // 68 gets palindromic after 3 steps: 1111
 
 // Challenge Input
-
 // 123
 // 286
 // 196196871
@@ -39,6 +37,7 @@
 // Note
 
 // Bonus: see which input numbers, through 1000, yield identical palindromes.
+
 // Bonus 2: See which numbers don't get palindromic in under 10000 steps. Numbers that never converge are called Lychrel numbers.
 
 //===========================================================================//
@@ -49,30 +48,39 @@
 
 // TABLE OF CONTENTS: (lines based on sublimeText 2)
     
-    //1. Palindromize(num); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. --> line 78
+    //1. Palindromize(num); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. --> line 86
 
-    //2. Finding shared palindromes over a range with uniqueShared(start, end); --> line 137
+    //2. Finding shared palindromes over a range with uniqueShared(start, end); --> line 145
 
-    //3. mostCommonPal(start, end); Finds the most common palindrome over a certain range --> line 240
+    //3. mostCommonPal(start, end); Finds the most common palindrome over a certain range --> line 248
 
         // Takes output of uniqueShared(start, end); and finds the palindrome with the most common base numbers
 
     // APPENDIX - modules:
 
-        // a. Unique value modules - check(specific, range); unique(array); --> 266
+        // a. Unique value modules - check(specific, range); unique(array); --> 274
 
-        // b. Quicksort module - sortUniqueShared(start, end); --> line 348
+        // b. Quicksort module - sortUniqueShared(start, end); --> line 356
 
-        // c. See if a number is a palindrome - isPal(num); line --> 406
+        // c. See if a number is a palindrome - isPal(num); line --> 414
 
-        // d. Manipulate input numbers - numToArray(num); and reverseNum(num); --> 432
+        // d. Manipulate input numbers - numToArray(num); and reverseNum(num); --> 440
 
-        // e. See a sorted list of palindromes/bases over a certain range - printShared(start, end); --> line 462
+        // e. See a sorted list of palindromes/bases over a certain range - printShared(start, end); --> line 470
+
+//===========================================================================//
+// MAIN FUNCTION CALLS
+//===========================================================================//
+
+    // palindromize(num);  --> creates palindrome using the method described in the Challenge
+        // Returns an array [palindrome, base]
+        // Using by itself, un-comment console.log(), but if using other functions in this program, be sure to comment out the console.log() statement so you don't get a bunch of extra stuff printing out to the console
+
+    // printShared(start, end); --> prints out sorted list of the palindromes which have more than one base number in the specified start/end range.
+
+    // mostCommonPal(start, end); --> prints out the palindrome with the most shared base numbers in the specified range. 
 
 
-// MAIN CALLS
-
-    // palindromize(num);  --> 
 
 //===========================================================================//
 // ~~~ 1. PALINDROMIFICATION!!!! ~~~ //
@@ -128,7 +136,7 @@ function palindromize(num) {
 
     // Comment console.log() if you are going to use other functions in here, or you are just going to have a lot of stuff to scroll through
 
-    console.log("Base Number: " + num + " palindromizes to: " + newNum + " in " + count + " step(s)");
+    // console.log("Base Number: " + num + " palindromizes to: " + newNum + " in " + count + " step(s)");
 
     return [num, newNum]; // Essentially returns [base, palindrome]
 }
