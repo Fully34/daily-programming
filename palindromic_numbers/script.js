@@ -47,27 +47,27 @@
 
 "use strict";
 
-// TABLE OF CONTENTS:
+// TABLE OF CONTENTS: (lines based on sublimeText 2)
     
-    //1. Palindromize(num); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. 
+    //1. Palindromize(num); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. --> line 78
 
-    //2. Finding shared palindromes over a range with uniqueShared(start, end);
+    //2. Finding shared palindromes over a range with uniqueShared(start, end); --> line 137
 
-    //3. mostCommonPal(start, end); Finds the most common palindrome over a certain range.
+    //3. mostCommonPal(start, end); Finds the most common palindrome over a certain range --> line 240
 
         // Takes output of uniqueShared(start, end); and finds the palindrome with the most common base numbers
 
     // APPENDIX - modules:
 
-        // a. Unique value modules - check(specific, range); unique(array);
+        // a. Unique value modules - check(specific, range); unique(array); --> 266
 
-        // b. Quicksort module - sortUniqueShared(start, end);
+        // b. Quicksort module - sortUniqueShared(start, end); --> line 348
 
-        // c. See if a number is a palindrome - isPal(num);
+        // c. See if a number is a palindrome - isPal(num); line --> 406
 
-        // d. Manipulate input numbers - numToArray(num); and reverseNum(num);
+        // d. Manipulate input numbers - numToArray(num); and reverseNum(num); --> 432
 
-        // e. See a sorted list of palindromes/bases over a certain range - printShared(start, end);
+        // e. See a sorted list of palindromes/bases over a certain range - printShared(start, end); --> line 462
 
 
 // MAIN CALLS
@@ -125,7 +125,7 @@ function palindromize(num) {
     }
 
     // Un - comment console.log() statement if you want to see the result of a single calculation and the steps that it took to produce a palindrome. 
-    
+
     // Comment console.log() if you are going to use other functions in here, or you are just going to have a lot of stuff to scroll through
 
     console.log("Base Number: " + num + " palindromizes to: " + newNum + " in " + count + " step(s)");
