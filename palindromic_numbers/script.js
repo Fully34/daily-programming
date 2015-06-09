@@ -70,6 +70,10 @@
         // e. See a sorted list of palindromes/bases over a certain range - printShared(start, end);
 
 
+// MAIN CALLS
+
+    // palindromize(num);  --> 
+
 //===========================================================================//
 // ~~~ 1. PALINDROMIFICATION!!!! ~~~ //
 //===========================================================================//
@@ -123,7 +127,7 @@ function palindromize(num) {
     // Un - comment console.log() statement if you want to see the result of a single calculation
     // Comment console.log() if you are going to use other functions in here, or you are just going to have a lot of stuff to scroll through
 
-    // console.log("Base Number: " + num + " | Palindrome: " + newNum );
+    console.log("Base Number: " + num + " palindromizes to: " + newNum + " in " + count + " step(s)");
 
     return [num, newNum]; // Essentially returns [base, palindrome]
 }
