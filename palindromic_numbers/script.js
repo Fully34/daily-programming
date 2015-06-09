@@ -124,7 +124,8 @@ function palindromize(num) {
         }
     }
 
-    // Un - comment console.log() statement if you want to see the result of a single calculation
+    // Un - comment console.log() statement if you want to see the result of a single calculation and the steps that it took to produce a palindrome. 
+    
     // Comment console.log() if you are going to use other functions in here, or you are just going to have a lot of stuff to scroll through
 
     console.log("Base Number: " + num + " palindromizes to: " + newNum + " in " + count + " step(s)");
