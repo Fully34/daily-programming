@@ -32,19 +32,34 @@
 // Bonus 2: See which numbers don't get palindromic in under 10000 steps. Numbers that never converge are called Lychrel numbers.
 "use strict";
 
-// ONLY USE FIRST FUNCTION.  THE OTHERS ARE MODULES USED WITHIN palindromize();
+
+// TABLE OF CONTENTS:
+    
+    // 1. Palindromize(); --> Does a lot of the heavy lifting, has the primary palindrome calculation logic. 
+
+    // 2. Finding shared palindromes
+        
+        // - This is where we start doing a lot of calculations over (potentially) large ranges.  
+        
+        // The functions in this section use modules to start whittling down the elements of output arrays to only contain instances of palindromes --> Then we take that list and chop it further by only looking at unique values --> and finally we get rid of any palindrome/base sets that don't have multiple base values (since we want to look at the palindromes that have multiple possible bases)
+        
+        // We also use a quicksort algorithm module to sort the final output of uniqueShared();
+
+    //3. 
+
 
 //===========================================================================//
-// ~~~ PALINDROMIFICATION!!!! ~~~ //
+// ~~~ 1. PALINDROMIFICATION!!!! ~~~ //
 //===========================================================================//
 
-// This is the base function for this entire operation.  It contains the logic for how to take in base numbers and iterate them into palindromes
+// palindromize(); is the base function for this entire operation.  It contains the logic for how to take in base numbers and iterate them into palindromes. 
 
 // Also important to note that due to limitations in JavaScript, we need to have contingencies for numbers that are going to be too large for JavaScript to accurately determine.  
 
-// tl;dr - this function palindromizes a base number, and has messages that deal with situations where that is not possible.  
+// Since we output string messages for all cases where a palindrome is not calculated, it is easy to filter those out of arrays later on to only focus on the palindromes. 
 
-// Since we output string messages for all cases, it is easy to filter those out of arrays later on 
+    // tl;dr - this function palindromizes a base number, and has messages that deal with situations where that is not possible.
+
 
 function palindromize(num) {
 
@@ -80,132 +95,16 @@ function palindromize(num) {
         }
     }
 
+    // Un - comment console.log() statement if you want to see the result of a single calculation
+    // Comment console.log() if you are going to use other functions in here, or you are just going to have a lot of stuff to scroll through
+
+    // console.log("Base Number: " + num + " | Palindrome: " + newNum );
+
     return [num, newNum];
 }
 
 //===========================================================================//
-// ~~~ Modules to manipulate input numbers ~~~ //
-//===========================================================================//
-
-// Taking a number and turning it into an array
-// Useful in reverseNum(); function
-
-function numToArray(num) {
-
-    var array = num.toString().split("");
-
-    for (var i = 0; i < array.length; i++) {
-
-        array[i] = parseInt(array[i], 10);
-    }
-
-    return array;
-}
-
-// Using the numToArray(); function to help in reversing a number
-
-function reverseNum(num) {
-
-    var array = numToArray(num);
-
-    var revNum = parseInt(array.reverse().join(""));
-
-    return revNum;
-}
-
-//===========================================================================//
-// ~~~ Module to check if input is a palindrome ~~~ //
-//===========================================================================//
-
-// Simple test to return a boolean value which describes a numbers' palindromeness
-
-    // Used in palindromize(); as a conditional check
-
-function isPal(num) {
-
-    var array = numToArray(num);
-    var pal = true;
-
-    for (var i = 0, j = array.length-1;  i < array.length/2; i++, j--) {
-
-        // debugger;
-
-        if (array[i] !== array[j]) {
-            pal = false;
-            break;
-        }
-    }
-
-    return pal;
-}
-
-
-
-//===========================================================================//
-// ~~~ UNIQUE VALUE MODULES ~~~ //
-//===========================================================================//
-
-// This function checks for duplicates an array with the following structure:
-
-    // [ [ palindrome, [base1, base2, base3] ], ... ]
-
-    // The arrSpecific argument is actually a simple integer (which would be taken from the palindrome spot in the array above)
-
-    // 
-
-    // Returns a boolean value 
-
-function check(arrSpecific, arrRange) {
-
-    var isIn = false;
-
-    for (var i = 0; i < arrRange.length; i ++) {
-
-        var array = arrRange[i][0];
-        var comparing = arrSpecific[0];
-
-        if (array === comparing){
-            
-            isIn = true;
-            return isIn;
-        }
-    }
-
-    return isIn;
-}
-
-function unique(array) {
-
-    var newArray = [];
-
-    for (var i = 0; i < array.length; i ++) {
-
-        // debugger; 
-
-        if ( !check(array[i], newArray) && (array[i][1].length > 1) ) {
-
-            newArray.push(array[i]);
-        }
-    }
-
-    return newArray;
-}
-
-function printUniques(array) {
-
-    var uniques = unique(array);
-
-    for (var i = 0; i < uniques.length; i ++) {
-
-        if (uniques[i][1].length > 1) {
-
-            console.log("Palindrome: " + uniques[i][0] + " | " + "Shared numbers: " + uniques[i][1]);
-        }
-    }
-}
-
-//===========================================================================//
-// ~~~ FIND LIKE PALINDROMES BONUS ~~~ //
+// ~~~ 2. FIND LIKE PALINDROMES BONUS ~~~ //
 //===========================================================================//
 
 // uniqueShared(); --> returns an array with the following structure:
@@ -213,6 +112,7 @@ function printUniques(array) {
     // [ [ palindrome, [base1, base2, base3, etc...] ] ]
 
         // It is sorted numerically using the palindrome integer
+        // Does this by first finding the unique sub-arrays within the array sharedPal --> Then sorts them using the modified quicksort algorithm I unabashedly stole from Stack Overflow (user: Andriy). 
 
 function uniqueShared(start, end) {
 
@@ -267,16 +167,130 @@ function onlyPal(start, end) {
     }
 
     return palArray;
-};
+}
+
+//===========================================================================//
+// ~~~ 3. MOST COMMON SHARED PALINDROME BONUS ~~~ //
+//===========================================================================//
+
+// Now we will find the palindrome with the most base numbers by checking -->array[i][1].length
+
+// We will use a dummy value to store the location of the current largest list of base numbers and at the end, print out that value. 
+
+function mostCommonPal(start, end) {
+
+    var array = uniqueShared(start, end);
+    var mostBase = [0,[]];
+
+    for (var i = 0; i < array.length; i ++) {
+
+        if (array[i][1].length > mostBase[1].length) {
+
+            mostBase = array[i];
+        }
+    }
+
+    return "The most common palindrome in that range is: \n\n" + " - " +mostBase[0] + " - " + " \n\nThere are " + mostBase[1].length + " Base Numbers: \n\n" + mostBase[1];
+}
 
 
 //===========================================================================//
-// ~~~ SORTING MODULE ~~~ //
+// ~~~ Appendix - MODULARITY IS GOOD! ~~~ //
 //===========================================================================//
+// ~~~ a. UNIQUE VALUE MODULES ~~~ //
+//===========================================================================//
+
+// check(); checks for duplicates an array with the following structure:
+
+    // [ [ palindrome, [base1, base2, base3] ], ... ]
+
+    // The arrSpecific argument is actually a simple integer (which would be taken from the palindrome spot in the array above)
+
+    // arrRange is a full array with many values with the above array structure
+
+    // Returns a boolean value 
+
+    // Used in tandem with unique();
+
+function check(arrSpecific, arrRange) {
+
+    var isIn = false;
+
+    for (var i = 0; i < arrRange.length; i ++) {
+
+        var array = arrRange[i][0];
+        var comparing = arrSpecific[0];
+
+        if (array === comparing){
+            
+            isIn = true;
+            return isIn;
+        }
+    }
+
+    return isIn;
+}
+
+
+// unique(); argument array and the array returned both follow the same structure: 
+    
+    // [ [ palindrome, [base1, base2, base3] ], ... ]
+
+    // The input array potentially has duplicate values where the output array will not have any duplicate values
+
+    // IE: each [palindrome, [base1,base2,base3,...]] sub-array will be unique
+
+    // This is used in tandem with uniqueShared(); and sortUniqueShared(); below to return only unique values of the desired ranges.  
+
+function unique(array) {
+
+    var newArray = [];
+
+    for (var i = 0; i < array.length; i ++) {
+
+        // debugger; 
+
+        if ( !check(array[i], newArray) && (array[i][1].length > 1) ) {
+
+            newArray.push(array[i]);
+        }
+    }
+
+    return newArray;
+}
+
+
+// Simple visualization of unique values of an array with the structure: 
+
+    // [ [ palindrome, [base1, base2, base3] ], ... ]
+
+function printUniques(array) {
+
+    var uniques = unique(array);
+
+    for (var i = 0; i < uniques.length; i ++) {
+
+        if (uniques[i][1].length > 1) {
+
+            console.log("Palindrome: " + uniques[i][0] + " | " + "Shared numbers: " + uniques[i][1]);
+        }
+    }
+}
+
+
+//===========================================================================//
+// ~~~ b. SORTING MODULE ~~~ //
+//===========================================================================//
+
+// Lifted random quicksort from Stack Overflow and modified to sort the resulting array from uniqueShared numerically instead of lexicographically based on the palindrome value
+
+// Posted by User: Andriy (1/15/2015)
+
+// Modified for arrays with the structure:
+
+    // [ [base1, palindrome1], [base2, palindrome2], ... ]
 
 function sortUniqueShared(array, left, right) { 
-
-// Lifted quicksort from Stack Overflow and modified to sort the resulting array from uniqueShared numerically instead of lexicographically based on the palindrome value
 
     var i = left;
     var j = right;
@@ -285,13 +299,16 @@ function sortUniqueShared(array, left, right) {
      
     var pivot = parseInt(array[pivotidx.toFixed()]);  
     
-    /* partition */
+     // partition 
+
     while (i <= j) {
     
         while (parseInt(array[i][0]) < pivot)
+
             i++;
 
         while (parseInt(array[j][0]) > pivot)
+
             j--;
         
             if (i <= j) {
@@ -304,7 +321,8 @@ function sortUniqueShared(array, left, right) {
             }
     }
 
-    /* recursion */
+     // recursion 
+
     if (left < j){
 
         sortUniqueShared(array, left, j);
@@ -319,16 +337,74 @@ function sortUniqueShared(array, left, right) {
 }
 
 //===========================================================================//
-// ~~~ PRINTING SORTED LIST OF SHARED PALINDROMES ~~~ //
+// ~~~ c. Module to check if input is a palindrome ~~~ //
+//===========================================================================//
+
+// Simple test to return a boolean value which describes a numbers' palindromeness
+
+    // Used in palindromize(); as a conditional check
+
+function isPal(num) {
+
+    var array = numToArray(num);
+    var pal = true;
+
+    for (var i = 0, j = array.length-1;  i < array.length/2; i++, j--) {
+
+        // debugger;
+
+        if (array[i] !== array[j]) {
+            pal = false;
+            break;
+        }
+    }
+
+    return pal;
+}
+
+//===========================================================================//
+// ~~~ d. MODULES TO MANIPULATE INPUT NUMBERS ~~~ //
+//===========================================================================//
+
+// Taking a number and turning it into an array
+// Useful in reverseNum(); function
+
+function numToArray(num) {
+
+    var array = num.toString().split("");
+
+    for (var i = 0; i < array.length; i++) {
+
+        array[i] = parseInt(array[i], 10);
+    }
+
+    return array;
+}
+
+// reverseNum(); takes in num (integer) and returns a reversed version of num as an integer
+
+function reverseNum(num) {
+
+    var array = numToArray(num);
+
+    var revNum = parseInt(array.reverse().join(""));
+
+    return revNum;
+}
+
+//===========================================================================//
+// ~~~ e. PRINTING SORTED LIST OF SHARED PALINDROMES ~~~ //
 //===========================================================================//
 
 // This will print the values of an array in a way we can easily read. 
 
-// only useful for structure like this:  
+// only useful for the following structure:  
     
-    // [ [ pal , [base1, base2, base3] ], ... ] 
+    // [ [ palindrome , [base1, base2, base3] ], ... ] 
 
     // Initially made for use in tandem with the result of uniqueShared();
+
+    // Mostly a visualization tool
 
 function printShared(array) {
 
@@ -336,27 +412,4 @@ function printShared(array) {
 
         console.log("Palindrome: " + array[i][0] + " | Shared Base Numbers: " + array[i][1]); 
     }
-}
-
-//===========================================================================//
-// ~~~ MOST COMMON SHARED PALINDROME ~~~ //
-//===========================================================================//
-
-// Now we will find the palindrome with the most base numbers by checking -->array[i][1].length
-
-// We will use a dummy value to store the location of the current largest list of base numbers and at the end, print out that value. 
-
-function mostCommonPal(array) {
-
-    var mostBase = [0,[]];
-
-    for (var i = 0; i < array.length; i ++) {
-
-        if (array[i][1].length > mostBase[1].length) {
-
-            mostBase = array[i];
-        }
-    }
-
-    return "The most common palindrome is: " + mostBase[0] + " \n " + mostBase[1].length + " Bases: " + mostBase[1];
 }
