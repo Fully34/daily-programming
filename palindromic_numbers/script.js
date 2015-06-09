@@ -75,7 +75,7 @@ function palindromize(num) {
     }
 
     return [num, newNum];
-}
+};
 
 //===========================================================================//
 // ~~~ Modules to manipulate input numbers ~~~ //
@@ -91,7 +91,7 @@ function numToArray(num) {
     }
 
     return array;
-}
+};
 
 function reverseNum(num) {
 
@@ -100,7 +100,7 @@ function reverseNum(num) {
     var revNum = parseInt(array.reverse().join(""));
 
     return revNum;
-}
+};
 
 //===========================================================================//
 // ~~~ Module to check if input is a palindrome ~~~ //
@@ -122,23 +122,12 @@ function isPal(num) {
     }
 
     return pal;
-}
+};
+
+
 
 //===========================================================================//
-// ~~~ Module to check if an array contains a value ~~~ //
-//===========================================================================//
-
-// Array.prototype.contains = function(elem) {
-   
-//    for (var i in this) {
-       
-//        if (this[i] == elem) return true;
-//    }
-//    return false;
-// };
-
-//===========================================================================//
-// ~~~ UNIQUE VALUES ~~~ //
+// ~~~ UNIQUE VALUE MODULES ~~~ //
 //===========================================================================//
 
 //Need to come up with a function to check if the array is already in the array:
@@ -160,7 +149,7 @@ function check(arrSpecific, arrRange) {
     }
 
     return isIn;
-}
+};
 
 function unique(array) {
 
@@ -170,14 +159,14 @@ function unique(array) {
 
         // debugger; 
 
-        if (!check(array[i], newArray)) {
+        if ( !check(array[i], newArray) && (array[i][1].length > 1) ) {
 
             newArray.push(array[i]);
         }
     }
 
     return newArray;
-}
+};
 
 function printUniques(array) {
 
@@ -185,9 +174,13 @@ function printUniques(array) {
 
     for (var i = 0; i < uniques.length; i ++) {
 
-        console.log("Palindrome: " + uniques[i][0] + " | " + "Shared numbers: " +uniques[i][1]);
+        if (uniques[i][1].length > 1) {
+
+            console.log("Palindrome: " + uniques[i][0] + " | " + "Shared numbers: " + uniques[i][1]);
+        }
     }
-}
+};
+
 //===========================================================================//
 // ~~~ FIND LIKE PALINDROMES BONUS ~~~ //
 //===========================================================================//
@@ -211,9 +204,9 @@ function onlyPal(start, end) {
     }
 
     return palArray;
-}
+};
 
-function shared(start, end) {
+function uniqueShared(start, end) {
 
     var array = onlyPal(start, end);
 
@@ -235,5 +228,15 @@ function shared(start, end) {
         sharedPal.push([array[i][1], tempSharedPal]);
     }
 
-    return printUniques(sharedPal);
+    // return printUniques(sharedPal);
+    return unique(sharedPal);
 };
+
+//===========================================================================//
+// ~~~ SORTING MODULE ~~~ //
+//===========================================================================//
+
+function sortShared(array) {
+
+
+}
