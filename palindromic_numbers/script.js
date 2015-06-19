@@ -236,6 +236,9 @@ function onlyPal(start, end) {
         if (basicArray[j].length === 2) { 
 
         // Only putting elements that are palindrome/base pairs into palArray. 
+        // If the result of palindromize(i) returns "that's a hell of a big number... Does not compute", the length of that value in basicArray will be greater than 2.
+            // --> ONLY PUSHES basicArray values WITH THE STRUCTURE: [base, palindrome] into palArray.
+
 
             palArray.push(basicArray[j]);
         }
