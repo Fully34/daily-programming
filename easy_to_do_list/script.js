@@ -1,3 +1,4 @@
+"use strict";
 // Description
 
 // Todays challenge will be something slightly different! Atleast I think the challenge is meant to be for today? Wait, am I meant to even be submitting today?
@@ -33,7 +34,13 @@
 // Consider submitting it to /r/dailyprogrammer_ideas
 
 
-var toDo = [];
+// Functions to call:
+    // addItem();
+    // deleteItem();
+    // viewList();
+    // importantAdd();
+
+var toDo = ["1) hello", "2) goodbye", "3) greetings"];
 
 //=============================== ADDING ITEM ==============================//
 
@@ -45,45 +52,103 @@ function addItem() {
 
     // PLAYING WITH HOW TO GET THE TO DO LIST NUMBERED
 
-    // for (var i = 0; i < toDo.length; i ++) {
+    for (var i = toDo.length - 1; i < toDo.length; i ++) {
 
-    //     toDo[i] = (i + 1) + ") " + toDo[i];
-    // }
+        toDo[i] = (i + 1) + ") " + toDo[i];
+    }
 
+    return viewList();
+}
+        
+
+//============================ ADD IMPORTANT ===============================//
+
+// Need to place new item at front and re-number all the subsequent items
+
+function importantAdd () {
+
+    var item = prompt (" what would you like to add to the top of your list?");
+
+    toDo.unshift(item.toLowerCase());
+
+    for (var i = 0; i < toDo.length; i ++) {
+
+        // Normal addItem(); function for the new first item
+
+        if (i === 0) {
+        
+            toDo[i] = (i + 1) + ") " + toDo[i];
+
+        } else { // RE-NUMBER SUBSEQUENT ITEMS BY GETTING RID OF THE "#) " and replacing it with the new (i + 1) value.
+
+            toDo[i] = (toDo[i].slice(3, toDo[i].length));
+
+            toDo[i] = (i + 1) + ") " + toDo[i];
+        }
+    }
     return toDo;
-
 }
 
 //=============================  DELETE ITEM  =============================//
+
+//THIS IS BROKEN AS FUCK.  NEED TO SPLICE THE ARRAY AT THE INDEX OF THE ITEM
 
 function deleteItem() {
 
     var item = prompt("What have you completed?");
 
-    for (var i = 0; i < toDo.length; i ++) {
+    if (typeof(checkList(item)) !==  "string") {
 
-        if(item === toDo[i]) {
+        toDo.splice(checkList(item), 1);
 
-            toDo.splice(i,1);
+// //EASILY COULD BE MORE MODULAR HERE: SAME LOGIC AS IN BOTH ADD FUNCTIONS, too lazy to abstract right now
 
-            console.log("Good job on getting that out of the way!");
-            return "Here is your updated to-do list" + " : " + toDo;
-            break;
+        for (var i = 0; i < toDo.length; i ++) {
+
+            toDo[i] = toDo[i] = (toDo[i].slice(3, toDo[i].length));
+
+            toDo[i] = (i + 1) + ") " + toDo[i];
         }
 
+        return toDo;
     }
-    return "That's not on your to-list!";
+
+    return "That's not on your to-do list!"
 }
+
 
 //==============================  VIEW LIST  ================================//
 
 function viewList() {
 
-    for (var i = 0; i < toDo.length; i ++) {
+    if (toDo.length < 1 ) {
 
-        console.log(i + ") " + toDo[i]);
+        return "You don't have anything on your to-do list!";
+
+    } else {
+    
+        for (var i = 0; i < toDo.length; i ++) {
+
+            console.log(toDo[i]);
+        }
     }
 }
 
+
 //=============================  CHECK LIST  ===============================//
+
+// checking current toDo array to see if an item is there.  
+// This works nicely with the numbered return that addItem(); creates.
+// NEED TO RETURN THE INDEX OF THE ITEM IF IT'S IN THE ARRAY SO THAT WE CAN DELETE IT.  
+function checkList(item) {
+
+    for (var i = 0; i < toDo.length; i ++) {
+
+        if(item === (toDo[i].slice(3, toDo[i].length))) {
+
+            return i;
+        }
+    }
+    return "Not here";
+}
 
