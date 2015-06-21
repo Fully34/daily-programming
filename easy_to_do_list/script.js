@@ -91,7 +91,6 @@ function importantAdd () {
 
 //=============================  DELETE ITEM  =============================//
 
-//THIS IS BROKEN AS FUCK.  NEED TO SPLICE THE ARRAY AT THE INDEX OF THE ITEM
 
 function deleteItem() {
 
