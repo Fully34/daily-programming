@@ -46,16 +46,21 @@
 
 
 //===========================================================================//
-                        /* ~~~ NEW TITLE ~~~ */ 
+                        /* ~~~ Main Function ~~~ */ 
 //===========================================================================//
 
-var input1 = 'This challenge doesn\'t seem so hard.'
+var input1 = 'This challenge doesn\'t seem so hard.';
 
 function mangle(string) {
 
     var stringArr = strToArr(string);
-    var splitArr = letterArr(stringArr) 
-    debugger;
+    var splitArr = letterArr(stringArr);
+
+    var punctIndexArr = wherePunct(string);
+    var capIndexArr = isCapital(string);
+
+    // debugger;
+
     for (var i = 0; i < splitArr.length; i ++) {
 
         for (var j = 0; j<splitArr[i].length; j ++) {
@@ -71,7 +76,7 @@ function mangle(string) {
 
         }
             //need to join here or commas will be preserved
-            splitArr[i] = splitArr[i].join('');
+            // splitArr[i] = splitArr[i].join('');
 
         // This sorts, but puts special characters to the front
         // look into regex to check if something is a special character and if so, keep it where it is.  
@@ -81,8 +86,68 @@ function mangle(string) {
         // Need to have function to return indeces that were capitalized and re-capitalize after sort
 
     }
+
     return splitArr.join(' ');
 };
+
+
+//============================== Modules ==============================//
+        
+
+
+// Seeing if a string contains punctuation        
+//DOENSN'T WORK IF THE STRING HAS LENGTH > 9 BECAUSE PARSEINT RETURNS TWO NUMBERS -- FIXED
+function wherePunct(string) {
+
+    var inlinePunct = "./,?!-\'".split('');
+
+    var stringArr = string.split('');
+
+    var punctIndexArr = [];
+
+    for (var i = 0; i < stringArr.length; i ++){
+
+    // debugger;
+
+        for (var j = 0; j < inlinePunct.length; j ++) {
+
+            if (stringArr[i] === inlinePunct[j]) {
+
+                //Push object with index and punctuation values to punctIndexArr
+                punctIndexArr.push( { 'index' : i , 'puntuation' : stringArr[i] } );
+            }
+        }
+    }
+
+    return punctIndexArr;
+}
+
+
+//return index of capital letter
+function isCapital(string) {
+
+    var capitalized = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+    var stringArr = string.split('');
+
+    var capIndexArr = [];
+
+    for (var i = 0; i < stringArr.length; i ++){
+
+    // debugger;
+
+        for (var j = 0; j < capitalized.length; j ++) {
+
+            if (stringArr[i] === capitalized[j]) {
+
+                capIndexArr.push( i );
+
+            }
+        }
+    }
+
+    return capIndexArr;
+}
 
 
 function strToArr(string) {
@@ -100,7 +165,6 @@ function letterArr(arr) {
 
     return arr;
 }
-
 
 
 
