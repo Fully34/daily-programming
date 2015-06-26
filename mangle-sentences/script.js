@@ -48,82 +48,59 @@
 //===========================================================================//
                         /* ~~~ Main Function ~~~ */ 
 //===========================================================================//
+'use strict';
 
-var input1 = 'This challenge doesn\'t seem so hard.';
+var input1 = 'This challeege doesn\'t seem so hard.';
 
-function mangle(string) {
+// function mangle(string) {
 
-    var stringArr = strToArr(string);
-    var splitArr = letterArr(stringArr);
+//     var stringArr = strToArr(string);
+//     var splitArr = letterArr(stringArr);
 
-    var punctIndexArr = wherePunct(string);
-    var capIndexArr = isCapital(string);
+//     var punctIndexArr = wherePunct(string);
+//     var capIndexArr = isCapital(string);
 
-    // debugger;
+//     // debugger;
 
-    for (var i = 0; i < splitArr.length; i ++) {
-
-        for (var j = 0; j<splitArr[i].length; j ++) {
-            
-            //Check to see if a letter is capitalized -> if it is, make it lower case
-
-            if ( splitArr[i][j] === splitArr[i][j].toUpperCase() ) {
-
-                splitArr[i][j] = splitArr[i][j].toLowerCase();
-                console.log(splitArr);
-            } 
+    
+    
 
 
-        }
-            //need to join here or commas will be preserved
-            // splitArr[i] = splitArr[i].join('');
+// }
 
-        // This sorts, but puts special characters to the front
-        // look into regex to check if something is a special character and if so, keep it where it is.  
 
-        splitArr[i] = splitArr[i].sort();
 
-        // Need to have function to return indeces that were capitalized and re-capitalize after sort
+//===========================================================================//
+                        /* ~~~ Array Modules ~~~ */ 
+//===========================================================================//
 
+function strToArr(string) {
+
+    var splitArr = string.split(' ');
+
+    return splitArr;
+}
+
+function letterArr(arr) {
+
+    for (var i = 0; i < arr.length; i ++) {
+
+        arr[i] = arr[i].split('');
+        // console.log(arr[i]);
     }
 
-    return splitArr.join(' ');
-};
-
-
-//============================== Modules ==============================//
-        
-
-
-// Seeing if a string contains punctuation        
-//DOENSN'T WORK IF THE STRING HAS LENGTH > 9 BECAUSE PARSEINT RETURNS TWO NUMBERS -- FIXED
-function wherePunct(string) {
-
-    var inlinePunct = "./,?!-\'".split('');
-
-    var stringArr = string.split('');
-
-    var punctIndexArr = [];
-
-    for (var i = 0; i < stringArr.length; i ++){
-
-    // debugger;
-
-        for (var j = 0; j < inlinePunct.length; j ++) {
-
-            if (stringArr[i] === inlinePunct[j]) {
-
-                //Push object with index and punctuation values to punctIndexArr
-                punctIndexArr.push( { 'index' : i , 'puntuation' : stringArr[i] } );
-            }
-        }
-    }
-
-    return punctIndexArr;
+    return arr;
 }
 
 
-//return index of capital letter
+//===========================================================================//
+                        /* ~~~ CAPITALIZATION ~~~ */ 
+//===========================================================================//
+
+
+//============================== Find Capitals ==============================//
+
+//returns indices of capital letters in an array
 function isCapital(string) {
 
     var capitalized = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -149,29 +126,113 @@ function isCapital(string) {
     return capIndexArr;
 }
 
+//===========================================================================//
+                        /* ~~~ Punctuation ~~~ */ 
+//===========================================================================//
 
-function strToArr(string) {
 
-    return string.split(' ');
-}
+//========================= Invoke the functions ===========================//
+        
+function bigDaddyPunc(string) {
 
-function letterArr(arr) {
+    //Gives me an array of sub-arrays where the sub arrays are each word from original string
 
-    for (var i = 0; i < arr.length; i ++) {
+    var splitArr = letterArr(strToArr(string));
 
-        arr[i] = arr[i].split('');
-        console.log(arr[i]);
+    var puncObj = wherePunct(splitArr);
+    console.log(puncObj);
+
+    var puncGone = takePuncOut(splitArr, puncObj);
+
+    var sorted = sortSubs(puncGone);
+
+    var puncInsert = returnPunct(sorted, puncObj);
+
+    for (var i = 0; i < puncInsert.length; i ++){
+
+        puncInsert[i] = puncInsert[i].join('');
     }
 
-    return arr;
+    
+    return puncInsert.join(' ');
+}
+
+//============================== FIND THE PUNC ==============================//
+        
+// Seeing if a string contains punctuation        
+//DOENSN'T WORK IF THE STRING HAS LENGTH > 9 BECAUSE PARSEINT RETURNS TWO NUMBERS -- FIXED
+function wherePunct(array) {
+
+    var inlinePunct = './,?!-\''.split('');
+
+    // var stringArr = string.split('');
+
+    var punctIndexArr = [];
+
+    for (var i = 0; i < array.length; i ++){
+
+        for (var x = 0; x < array[i].length; x ++){
+
+            for (var j = 0; j < inlinePunct.length; j ++) {
+
+                if (array[i][x] === inlinePunct[j]) {
+
+                    //Push object with index and punctuation values to punctIndexArr
+                    punctIndexArr.push( { 'index-outer' : i , 'index-inner' : x, 'punctuation' : array[i][x] } );
+                }
+            }
+        }
+    }
+
+    return punctIndexArr;
 }
 
 
+//============================== Take Punc Out ==============================//
+        
+function takePuncOut(array, obj) {
 
 
+    //target proper outer array element
+
+    for (var i = 0; i < obj.length; i ++){
+
+        //This is insanity 
+        array[ obj[i]['index-outer'] ].splice(obj[i]['index-inner'], 1);
+        // Since I know exactly where the punctuation is with obj, I can go in and remove it from the array created by using:
+            // letterArr(stringToArr(input1)); -> This essentially breaks the full string down into an array of sub-arrays
+            // The sub arrays' elements are the letters of each word
+    }
+
+    return array;
+}
 
 
+//============================ Sort w/out punc ==============================//
 
 
+function sortSubs(array) {
+
+    for (var i = 0; i < array.length; i ++){
+
+        array[i].sort();
+    }
+
+    return array;
+}
 
 
+//============================== Return Punc ==============================//
+        
+
+function returnPunct(array, obj) {
+
+    var punctIndexArr = obj;
+
+    for (var i = 0; i < punctIndexArr.length; i ++) {
+
+        array[ punctIndexArr[i]['index-outer'] ].splice(punctIndexArr[i]['index-inner'], 0, punctIndexArr[i].punctuation);
+    }
+
+    return array;
+}
