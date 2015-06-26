@@ -70,27 +70,6 @@ var input1 = 'This challeege doesn\'t seem so hard.';
 
 
 
-//===========================================================================//
-                        /* ~~~ Array Modules ~~~ */ 
-//===========================================================================//
-
-function strToArr(string) {
-
-    var splitArr = string.split(' ');
-
-    return splitArr;
-}
-
-function letterArr(arr) {
-
-    for (var i = 0; i < arr.length; i ++) {
-
-        arr[i] = arr[i].split('');
-        // console.log(arr[i]);
-    }
-
-    return arr;
-}
 
 
 //===========================================================================//
@@ -169,16 +148,27 @@ function wherePunct(array) {
 
     var punctIndexArr = [];
 
+    //loop through each word
     for (var i = 0; i < array.length; i ++){
 
-        for (var x = 0; x < array[i].length; x ++){
+        var word = array[i]; //-> reference the index, rather than look up every time
 
+        // looping through each letter of word[i]
+        for (var x = 0; x < word.length; x ++){
+
+            var character = word[x];
+
+            // ****** Make the conditional a helper function **** 
+            // if ( (inlinePunct.indexOf(character) > -1 ){
+                // punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
+            // }
+                // -> replaces the for and if below:
             for (var j = 0; j < inlinePunct.length; j ++) {
 
-                if (array[i][x] === inlinePunct[j]) {
+                if (character === inlinePunct[j]) {
 
                     //Push object with index and punctuation values to punctIndexArr
-                    punctIndexArr.push( { 'index-outer' : i , 'index-inner' : x, 'punctuation' : array[i][x] } );
+                    punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
                 }
             }
         }
@@ -190,16 +180,16 @@ function wherePunct(array) {
 
 //============================== Take Punc Out ==============================//
         
-function takePuncOut(array, obj) {
+function takePuncOut(array, puncObj) {
 
 
     //target proper outer array element
 
-    for (var i = 0; i < obj.length; i ++){
+    for (var i = 0; i < puncObj.length; i ++){
 
         //This is insanity 
-        array[ obj[i]['index-outer'] ].splice(obj[i]['index-inner'], 1);
-        // Since I know exactly where the punctuation is with obj, I can go in and remove it from the array created by using:
+        array[ puncObj[i]['word'] ].splice(puncObj[i]['letter'], 1);
+        // Since I know exactly where the punctuation is with puncObj, I can go in and remove it from the array created by using:
             // letterArr(stringToArr(input1)); -> This essentially breaks the full string down into an array of sub-arrays
             // The sub arrays' elements are the letters of each word
     }
@@ -231,8 +221,33 @@ function returnPunct(array, obj) {
 
     for (var i = 0; i < punctIndexArr.length; i ++) {
 
-        array[ punctIndexArr[i]['index-outer'] ].splice(punctIndexArr[i]['index-inner'], 0, punctIndexArr[i].punctuation);
+        array[ punctIndexArr[i]['word'] ].splice(punctIndexArr[i]['letter'], 0, punctIndexArr[i].punctuation);
     }
 
     return array;
+}
+
+
+//===========================================================================//
+                        /* ~~~ Array Modules ~~~ */ 
+//===========================================================================//
+
+function strToArr(string) {
+
+    var splitArr = string.split(' ');
+
+    return splitArr;
+}
+
+function letterArr(arr) {
+
+    var array = [];
+
+    for (var i = 0; i < arr.length; i ++) {
+
+        array.push( arr[i].split('') );
+        // console.log(arr[i]);
+    }
+
+    return arr;
 }

@@ -14,6 +14,7 @@
 //  1 1 1
 //  2 1 3
 //  1 4 1
+
 // So the size is 3 x 3. We have 7 logs to place and we see the 3 x 3 grid of current size of the log piles.
 // Log Placement:
 
