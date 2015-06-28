@@ -50,7 +50,7 @@
 //===========================================================================//
 'use strict';
 
-var input1 = 'This challeege doesn\'t seem so hard.';
+var input1 = 'This chalLeege doesn\'t seem so hard.';
 
 // function mangle(string) {
 
@@ -118,21 +118,26 @@ function bigDaddyPunc(string) {
 
     var splitArr = letterArr(strToArr(string));
 
+    // Find and return punctuation information as objects
     var puncObj = wherePunct(splitArr);
     console.log(puncObj);
 
+    // Take punctuation out
     var puncGone = takePuncOut(splitArr, puncObj);
 
+    // Sort the sub arrays
     var sorted = sortSubs(puncGone);
 
+    // Put punctuation back in (Using information from punctuation objects)
     var puncInsert = returnPunct(sorted, puncObj);
 
+    // Join each word together
     for (var i = 0; i < puncInsert.length; i ++){
 
         puncInsert[i] = puncInsert[i].join('');
     }
 
-    
+    //Join the sentence back together
     return puncInsert.join(' ');
 }
 
@@ -158,22 +163,28 @@ function wherePunct(array) {
             var character = word[x];
 
             // ****** Make the conditional a helper function **** 
-            // if ( (inlinePunct.indexOf(character) > -1 ) ) {
+            if ( (inlinePunct.indexOf(character) > -1 ) ) {
 
-            //     punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
-            // }
-                // -> replaces the for and if below:
-            for (var j = 0; j < inlinePunct.length; j ++) {
-
-                if (character === inlinePunct[j]) {
-
-                    //Push object with index and punctuation values to punctIndexArr
-                    punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
-                }
+                punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
             }
+                // -> replaces the for and if below:
+
+            //====================== Remove excess ========================//
+        
+
+            // for (var j = 0; j < inlinePunct.length; j ++) {
+
+            //     if (character === inlinePunct[j]) {
+
+            //         //Push object with index and punctuation values to punctIndexArr
+            //         punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
+            //     }
+            // }
+
         }
     }
 
+    // Return array of objects
     return punctIndexArr;
 }
 
@@ -187,7 +198,7 @@ function takePuncOut(array, puncObj) {
 
     for (var i = 0; i < puncObj.length; i ++){
 
-        //This is returning a string right now -> need to figure out why I'm not getting an array back.
+        // Use punctuation object information to take out the punctuation
         array[ puncObj[i]['word'] ].splice( puncObj[i]['letter'], 1 );
     }
 
@@ -200,6 +211,7 @@ function takePuncOut(array, puncObj) {
 
 function sortSubs(array) {
 
+    // Sort sub arrays w/out punctuation
     for (var i = 0; i < array.length; i ++){
 
         array[i].sort();
@@ -216,6 +228,7 @@ function returnPunct(array, obj) {
 
     var punctIndexArr = obj;
 
+    // put the punctuation back in (using punctuation object information)
     for (var i = 0; i < punctIndexArr.length; i ++) {
 
         array[ punctIndexArr[i]['word'] ].splice(punctIndexArr[i]['letter'], 0, punctIndexArr[i].punctuation);
@@ -243,8 +256,7 @@ function letterArr(arr) {
     for (var i = 0; i < arr.length; i ++) {
 
         array.push( arr[i].split('') );
-        // console.log(arr[i]);
     }
 
-    return arr;
+    return array;
 }
