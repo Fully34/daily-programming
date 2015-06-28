@@ -138,8 +138,7 @@ function bigDaddyPunc(string) {
 
 //============================== FIND THE PUNC ==============================//
         
-// Seeing if a string contains punctuation        
-//DOENSN'T WORK IF THE STRING HAS LENGTH > 9 BECAUSE PARSEINT RETURNS TWO NUMBERS -- FIXED
+// Seeing if a string contains punctuation -> returns array of objects with information about the punctuation   
 function wherePunct(array) {
 
     var inlinePunct = './,?!-\''.split('');
@@ -159,8 +158,9 @@ function wherePunct(array) {
             var character = word[x];
 
             // ****** Make the conditional a helper function **** 
-            // if ( (inlinePunct.indexOf(character) > -1 ){
-                // punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
+            // if ( (inlinePunct.indexOf(character) > -1 ) ) {
+
+            //     punctIndexArr.push( { 'word' : i , 'letter' : x, 'punctuation' : character } );
             // }
                 // -> replaces the for and if below:
             for (var j = 0; j < inlinePunct.length; j ++) {
@@ -187,11 +187,8 @@ function takePuncOut(array, puncObj) {
 
     for (var i = 0; i < puncObj.length; i ++){
 
-        //This is insanity 
-        array[ puncObj[i]['word'] ].splice(puncObj[i]['letter'], 1);
-        // Since I know exactly where the punctuation is with puncObj, I can go in and remove it from the array created by using:
-            // letterArr(stringToArr(input1)); -> This essentially breaks the full string down into an array of sub-arrays
-            // The sub arrays' elements are the letters of each word
+        //This is returning a string right now -> need to figure out why I'm not getting an array back.
+        array[ puncObj[i]['word'] ].splice( puncObj[i]['letter'], 1 );
     }
 
     return array;
