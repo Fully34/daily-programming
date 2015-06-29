@@ -126,6 +126,8 @@ function isCapital(string) {
     return capObjArr;
 }
 
+//============================ Remove Capitals ==============================//
+        
 
 function takeCapsOut(array, capObj) { // -> structure of array [ ["j", "o", ...], [], ...]
 
@@ -139,6 +141,8 @@ function takeCapsOut(array, capObj) { // -> structure of array [ ["j", "o", ...]
     return array;
 }
 
+//=========================== Return Capitals ==============================//
+        
 function returnCaps(array, capObj) { // -> structure of array [ ["j", "o", ...], [], ...]
 
     // put the capitalization back in (using capitalization object information)
@@ -154,9 +158,6 @@ function returnCaps(array, capObj) { // -> structure of array [ ["j", "o", ...],
 //===========================================================================//
                         /* ~~~ Punctuation ~~~ */ 
 //===========================================================================//
-
-
-//========================= Invoke the functions ===========================//
         
 
 //============================== FIND THE PUNC ==============================//
@@ -222,19 +223,6 @@ function takePuncOut(array, puncObj) {
 }
 
 
-//============================ Sort w/out punc ==============================//
-
-
-function sortSubs(array) {
-
-    // Sort sub arrays w/out punctuation
-    for (var i = 0; i < array.length; i ++){
-
-        array[i].sort();
-    }
-
-    return array;
-}
 
 
 //============================== Return Punc ==============================//
@@ -258,6 +246,9 @@ function returnPunct(array, obj) {
                         /* ~~~ Array Modules ~~~ */ 
 //===========================================================================//
 
+
+//============================== Word Array ==============================//
+        
 function strToArr(string) {
 
     var wordArr = string.split(' ');
@@ -265,6 +256,8 @@ function strToArr(string) {
     return wordArr;
 }
 
+//============================== Letter Array ==============================//
+        
 function letterArr(arr) {
 
     var array = [];
@@ -272,6 +265,20 @@ function letterArr(arr) {
     for (var i = 0; i < arr.length; i ++) {
 
         array.push( arr[i].split('') );
+    }
+
+    return array;
+}
+
+//============================ Sort sub-arrays ==============================//
+
+
+function sortSubs(array) {
+
+    // Sort sub arrays w/out punctuation
+    for (var i = 0; i < array.length; i ++){
+
+        array[i].sort();
     }
 
     return array;
