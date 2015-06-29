@@ -52,25 +52,43 @@
 
 var input1 = 'This chalLeege doesn\'t seem so hard.';
 
-// function mangle(string) {
 
-//     var stringArr = strToArr(string);
-//     var splitArr = letterArr(stringArr);
+function bigDaddySort(string) {
 
-//     var punctIndexArr = wherePunct(string);
-//     var capIndexArr = isCapital(string);
+    //Gives me an array of sub-arrays where the sub arrays are each word from original string
 
-//     // debugger;
+    var splitArr = letterArr(strToArr(string));
 
-    
-    
+    // Find and return punctuation information as objects
+    var puncObj = wherePunct(splitArr);
 
+    // Take punctuation out
+    var puncGone = takePuncOut(splitArr, puncObj);
 
-// }
+    // Find and return capitalization information as objects
+    var capObj = isCapital(string);
 
+    // Remove the capitalization
+    var capsGone = takeCapsOut(splitArr, capObj);
 
+    // Sort the sub arrays
+    var sorted = sortSubs(puncGone);
 
+    // Put punctuation back in (Using information from punctuation objects)
+    var puncInsert = returnPunct(sorted, puncObj);
 
+    // Put capitalization back in (Using information from cap objects) -> Same order as when we took out punc and capitalization
+    var capInsert = returnCaps(splitArr, capObj);
+
+    // Join each word together
+    for (var i = 0; i < puncInsert.length; i ++){
+
+        puncInsert[i] = puncInsert[i].join('');
+    }
+
+    //Join the sentence back together
+    return puncInsert.join(' ');
+}
 
 //===========================================================================//
                         /* ~~~ CAPITALIZATION ~~~ */ 
@@ -84,25 +102,53 @@ function isCapital(string) {
 
     var capitalized = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-    var stringArr = string.split('');
+    var stringArr = letterArr( strToArr(string) );
 
-    var capIndexArr = [];
+    var capObjArr = [];
 
+    // Loop through words
     for (var i = 0; i < stringArr.length; i ++){
 
-    // debugger;
+        var word = stringArr[i];
 
-        for (var j = 0; j < capitalized.length; j ++) {
+        // Loop through letters
+        for (var j = 0; j < word.length; j ++){
 
-            if (stringArr[i] === capitalized[j]) {
+            var character = word[j];
 
-                capIndexArr.push( i );
+            if ( capitalized.indexOf(character) > -1 ) {
 
+                capObjArr.push( ( { 'word' : i , 'character' : j } ) );
             }
         }
     }
 
-    return capIndexArr;
+    return capObjArr;
+}
+
+
+function takeCapsOut(array, capObj) { // -> structure of array [ ["j", "o", ...], [], ...]
+
+    //target proper outer array element
+    for (var i = 0; i < capObj.length; i ++){
+
+        // Use capitals object information to make them lowercase so we can sort
+        array[ capObj[i]['word'] ][capObj[i]['character'] ] = array[ capObj[i]['word'] ][capObj[i]['character'] ].toLowerCase();
+    }
+
+    return array;
+}
+
+function returnCaps(array, capObj) { // -> structure of array [ ["j", "o", ...], [], ...]
+
+    // put the capitalization back in (using capitalization object information)
+    for (var i = 0; i < capObj.length; i ++) {
+
+        // -> Capitalize the stuff
+        array[ capObj[i]['word'] ][capObj[i]['character'] ] = array[ capObj[i]['word'] ][capObj[i]['character'] ].toUpperCase();        
+    }
+
+    return array;
 }
 
 //===========================================================================//
@@ -112,34 +158,6 @@ function isCapital(string) {
 
 //========================= Invoke the functions ===========================//
         
-function bigDaddyPunc(string) {
-
-    //Gives me an array of sub-arrays where the sub arrays are each word from original string
-
-    var splitArr = letterArr(strToArr(string));
-
-    // Find and return punctuation information as objects
-    var puncObj = wherePunct(splitArr);
-    console.log(puncObj);
-
-    // Take punctuation out
-    var puncGone = takePuncOut(splitArr, puncObj);
-
-    // Sort the sub arrays
-    var sorted = sortSubs(puncGone);
-
-    // Put punctuation back in (Using information from punctuation objects)
-    var puncInsert = returnPunct(sorted, puncObj);
-
-    // Join each word together
-    for (var i = 0; i < puncInsert.length; i ++){
-
-        puncInsert[i] = puncInsert[i].join('');
-    }
-
-    //Join the sentence back together
-    return puncInsert.join(' ');
-}
 
 //============================== FIND THE PUNC ==============================//
         
@@ -147,8 +165,6 @@ function bigDaddyPunc(string) {
 function wherePunct(array) {
 
     var inlinePunct = './,?!-\''.split('');
-
-    // var stringArr = string.split('');
 
     var punctIndexArr = [];
 
@@ -244,9 +260,9 @@ function returnPunct(array, obj) {
 
 function strToArr(string) {
 
-    var splitArr = string.split(' ');
+    var wordArr = string.split(' ');
 
-    return splitArr;
+    return wordArr;
 }
 
 function letterArr(arr) {
