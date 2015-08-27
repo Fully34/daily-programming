@@ -71,6 +71,7 @@ function bigDaddySort(string) {
     // Remove the capitalization
     var capsGone = takeCapsOut(splitArr, capObj);
 
+
     // Sort the sub arrays
     var sorted = sortSubs(puncGone);
 
@@ -78,7 +79,7 @@ function bigDaddySort(string) {
     var puncInsert = returnPunct(sorted, puncObj);
 
     // Put capitalization back in (Using information from cap objects) -> Same order as when we took out punc and capitalization
-    var capInsert = returnCaps(splitArr, capObj);
+    var capInsert = returnCaps(sorted, capObj);
 
     // Join each word together
     for (var i = 0; i < puncInsert.length; i ++){
@@ -123,6 +124,7 @@ function isCapital(string) {
         }
     }
 
+    console.log(capObjArr);
     return capObjArr;
 }
 
@@ -138,6 +140,7 @@ function takeCapsOut(array, capObj) { // -> structure of array [ ["j", "o", ...]
         array[ capObj[i]['word'] ][capObj[i]['character'] ] = array[ capObj[i]['word'] ][capObj[i]['character'] ].toLowerCase();
     }
 
+    console.log(array);
     return array;
 }
 
@@ -201,6 +204,7 @@ function wherePunct(array) {
         }
     }
 
+    console.log(punctIndexArr);
     // Return array of objects
     return punctIndexArr;
 }
